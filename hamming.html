@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<title> Hamming code</title>
+		<script>
+			function code(){
+				let message = document.getElementById('inputData').value;
+				let inputDigits = message.split('');
+				for (let i = 0; i < inputDigits.length; i++)
+					inputDigits[i] = inputDigits[i] * 1;
+				inputDigits.push((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2);
+				inputDigits.push((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2);
+				inputDigits.push((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2);
+				document.getElementById('codedData').value = inputDigits.join('');
+			}
+			function decode(){
+				message = document.getElementById('codedData').value;
+				inputDigits = message.split('');
+				for (let i = 0; i < inputDigits.length; i++)
+					inputDigits[i] = inputDigits[i] * 1;
+					
+				if ((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 == inputDigits[5]){
+					if((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 == inputDigits[4]) {
+						if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6]) {
+							inputDigits[6] = 1 - inputDigits[6];
+							alert('error: 7 bit ');
+						}
+					}	
+					else{
+						if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6]){
+							inputDigits[2] = 1 - inputDigits[2];
+							alert('error: 3 bit');
+						}
+						else{
+							inputDigits[4] = 1 - inputDigits[4];
+							alert('error: 5 bit');
+						}
+					}
+				}
+				else if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 == inputDigits[6]){
+					if((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 == inputDigits[4]) {
+						if ((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 != inputDigits[5]) {
+							inputDigits[5] = 1 - inputDigits[5];
+							alert('error: 6 bit');
+						}
+					}
+					else{
+						if ((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 != inputDigits[5]){
+							inputDigits[0] = 1 - inputDigits[0];
+							alert('error: 1 bit');
+						}
+						else{
+							inputDigits[4] = 1 - inputDigits[4];
+							alert('error: 5 bit');
+						}
+					}
+				}	
+				else if ((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 == inputDigits[4]){
+					if((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 == inputDigits[5]){
+						if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6]){
+							inputDigits[6] = 1 - inputDigits[6];
+							alert('error: 7 bit');
+						}
+					}
+					else{
+						if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6]){
+							inputDigits[1] = 1 - inputDigits[1];
+							alert('error: 2 bit');
+						}
+						else{
+							inputDigits[5] = 1 - inputDigits[5];
+							alert('error: 6 bit');
+						}
+					}
+				}
+				else if ((inputDigits[1] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[6]){
+					if ((inputDigits[0] + inputDigits[2] + inputDigits[3]) % 2 != inputDigits[4]){
+						if ((inputDigits[0] + inputDigits[1] + inputDigits[3]) % 2 != inputDigits[5]){
+							inputDigits[3] = 1 - inputDigits[3];
+							alert('error: 4 bit');
+						}
+					}
+				}
+				document.getElementById('decodedData').value = inputDigits.join('');
+			}
+		</script>
+    </head>
+    <body> 
+        <p> <input type = 'text' id = 'inputData' /> input data </p>
+        <p> <input type = 'button' onclick = 'code()' value = 'code'/> </p>
+        <p> <input type = 'text' id = 'codedData' />  coded data </p>
+        <p> <input type = 'button' onclick = 'decode()' value = 'decode'/> </p>
+        <p> <input type = 'text' id = 'decodedData' /> decode data </p>
+    </body>
+</html>
